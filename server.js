@@ -3,9 +3,6 @@ const exphbs = require("express-handlebars");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 
-// Our scraping tools
-// Axios is a promised-based http library, similar to jQuery's Ajax method
-// It works on the client and on the server
 var axios = require("axios");
 var cheerio = require("cheerio");
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
@@ -110,11 +107,7 @@ app.get("/articles", function(req, res) {
     });
 });
 app.get("/articles/:id", function(req, res) {
-  // TODO
-  // ====
-  // Finish the route so it finds one article using the req.params.id,
-  // and run the populate method with "note",
-  // then responds with the article with the note included
+
   db.Article.findById(req.params.id)
   .populate("note")
   .then(function(dbArticle) {
@@ -127,11 +120,7 @@ app.get("/articles/:id", function(req, res) {
 
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function(req, res) {
-  // TODO
-  // ====
-  // save the new note that gets posted to the Notes collection
-  // then find an article from the req.params.id
-  // and update it's "note" property with the _id of the new note
+
   db.Note.create(req.body)
   .then(function(dbNote) {
     return db.Article.findByIdAndUpdate(req.params.id, { note: dbNote._id }, { new: true });
