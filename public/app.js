@@ -1,36 +1,34 @@
-$(function() {
+$(function () {
 
-// Whenever someone clicks area of article
-$(document).on("click", ".comment", function() {
-  // Empty the notes from the note section
-  $("#notes").empty();
-  var thisId = $(this).attr("data-id");
-  console.log(thisId)
+  // Whenever someone clicks area of article
+  $(document).on("click", ".comment", function () {
+    // Empty the notes from the note section
+    $("#notes").empty();
+    var thisId = $(this).attr("data-id");
 
-  // Now make an ajax call for the Article
-  $.ajax({
-    method: "GET",
-    url: "/articles/" + thisId
-  })
-    .then(function(data) {
-      console.log(data);
-      $("#notes").append("<h5>" + data.title + "</h5>");
-      $("#notes").append("<input id='titleinput' name='title' >");
-      $("#notes").append("<textarea id='bodyinput' style='float:right' name='body'></textarea>");
-      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+    // Now make an ajax call for the Article
+    $.ajax({
+      method: "GET",
+      url: "/articles/" + thisId
+    })
+      .then(function (data) {
+        $("#notes").append("<h5>" + data.title + "</h5>");
+        $("#notes").append("<input id='titleinput' name='title' >");
+        $("#notes").append("<textarea id='bodyinput' style='float:right' name='body'></textarea>");
+        $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
-      // If there's a note in the article
-      if (data.note) {
-        // Place the title of the note in the title input
-        $("#titleinput").val(data.note.title);
-        // Place the body of the note in the body textarea
-        $("#bodyinput").val(data.note.body);
-      }
-    });
-});
+        // If there's a note in the article
+        if (data.note) {
+          // Place the title of the note in the title input
+          $("#titleinput").val(data.note.title);
+          // Place the body of the note in the body textarea
+          $("#bodyinput").val(data.note.body);
+        }
+      });
+  });
 })
 // When you click the savenote button
-$(document).on("click", "#savenote", function() {
+$(document).on("click", "#savenote", function () {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
 
@@ -46,7 +44,7 @@ $(document).on("click", "#savenote", function() {
     }
   })
     // With that done
-    .then(function(data) {
+    .then(function (data) {
       // Log the response
       console.log(data);
       // Empty the notes section
