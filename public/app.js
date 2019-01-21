@@ -14,7 +14,7 @@ $(function () {
       .then(function (data) {
         $("#notes").append("<h5>" + data.title + "</h5>");
         $("#notes").append("<input id='titleinput' name='title' >");
-        $("#notes").append("<textarea id='bodyinput' style='float:right' name='body'></textarea>");
+        $("#notes").append("<textarea rows='10' id='bodyinput' style='float:right' name='body'></textarea>");
         $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
         // If there's a note in the article
