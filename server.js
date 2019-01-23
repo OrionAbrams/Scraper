@@ -51,8 +51,9 @@ app.get("/scrape", function (req, res) {
   // First, we grab the body of the html with axios
   axios.get("http://ind13.com").then(function (response) {
     var $ = cheerio.load(response.data);
+    var resultArray = [];
     $("div.cb-meta").each(function () {
-      var result = {};
+      var result = {}
       result.title = $(this)
         .find("a")
         .text();
@@ -67,17 +68,23 @@ app.get("/scrape", function (req, res) {
         .find("div.cb-mask")
         .find("img")
         .attr("src")
+      if (result.summary && result.title && result.link && result.imgLink) {
+        resultArray.push(result)
+      }
       // Create a new Article using the `result` object built from scraping
-      db.Article.remove({}).then(function () {
-        db.Article.create(result)
-          .then(function (dbArticle) {
-            // View the added result in the console
-            console.log(dbArticle)
-          }).then(function () {
-            res.redirect("/")
-          })
-      });
     })
+
+    db.Article.create(resultArray)
+      .then(function (dbArticle) {
+        // View the added result in the console
+        console.log(dbArticle)
+      }).then(function () {
+        res.redirect("/")
+      }).catch(function (err) {
+        console.log(err)
+        res.redirect("/")
+      });
+
   });
 });
 
