@@ -38,6 +38,7 @@ app.set("view engine", "handlebars");
 
 app.get("/", (req, res) => {
   db.Article.find({})
+  .sort({date: -1})
     .then(dbArticle => {
       var hbsObject = {
         articles: dbArticle
@@ -70,6 +71,7 @@ app.get("/scrape", function (req, res) {
         .attr("src")
       if (result.summary && result.title && result.link && result.imgLink) {
         resultArray.push(result)
+        resultArray.reverse()
       }
       // Create a new Article using the `result` object built from scraping
     })
