@@ -114,6 +114,17 @@ app.get("/articles/:id", function (req, res) {
       res.json(err);
     });
 });
+app.get("/delete/:id", function (req, res) {
+
+  db.Article.findById(req.params.id)
+    .remove()
+    .then(function (dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+});
 
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function (req, res) {

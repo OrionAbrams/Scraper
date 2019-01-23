@@ -26,6 +26,15 @@ $(function () {
         }
       });
   });
+  $(document).on("click", ".delete-button", function () {
+    console.log("something")
+    var thisId = $(this).attr("data-id");
+    $.get("/delete/" + thisId, function(data){
+      console.log(data)
+    }).then(function (){
+      location.reload()
+    })
+  })
 })
 // When you click the savenote button
 $(document).on("click", "#savenote", function () {
