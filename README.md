@@ -5,7 +5,7 @@ Scraper app using mongoose. Scrape the latest news about indie games and leave n
 This was an app made to practice mongoose and scraping with cheerio.
 
 # Technologies Used
-Handlebars, mongoose, cheerio, express.
+Handlebars, mongoose, cheerio, express, node.
 
 # Code example
 

@@ -12,6 +12,7 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
+
 // Require all models
 var db = require("./models");
 
@@ -30,12 +31,11 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
-
 //handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-// Routes
 
+// Routes
 app.get("/", (req, res) => {
   db.Article.find({})
   .sort({date: -1})
@@ -73,9 +73,9 @@ app.get("/scrape", function (req, res) {
         resultArray.push(result)
         resultArray.reverse()
       }
-      // Create a new Article using the `result` object built from scraping
     })
 
+    // Create a new Article using the `result` object built from scraping
     db.Article.create(resultArray)
       .then(function (dbArticle) {
         // View the added result in the console
